@@ -1,6 +1,6 @@
 from typing import Any
 
-from src.contracts.data_type import EmptyIterable, supported_primitive_data_types
+from saveables.contracts.data_type import EmptyIterable, supported_primitive_data_types
 
 
 def is_typed_uniformly(data: list | set | tuple) -> bool:

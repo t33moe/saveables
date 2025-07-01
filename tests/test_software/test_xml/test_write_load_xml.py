@@ -14,8 +14,8 @@ from resources.data import (  # type: ignore[import-not-found, import-untyped]
     tuples,
 )
 
-from src.contracts.constants import read_mode, write_mode
-from src.xml_format.xml_file import XmlFile
+from saveables.contracts.constants import read_mode, write_mode
+from saveables.xml_format.xml_file import XmlFile
 
 
 @pytest.mark.parametrize(

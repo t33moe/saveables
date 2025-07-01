@@ -4,9 +4,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-from src.contracts.constants import read_mode, write_mode
-from src.saveable.saveable import Saveable
-from src.xml_format.xml_file import XmlFile
+from saveables.contracts.constants import read_mode, write_mode
+from saveables.saveable.saveable import Saveable
+from saveables.xml_format.xml_file import XmlFile
 
 # create subclasses of Saveable class that hold the data to be save.
 # ALL attributes must have a default value. If the attribute is

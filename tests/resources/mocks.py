@@ -1,6 +1,6 @@
-from src.base.base_file_node import BaseFileNode
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
+from saveables.base.base_file_node import BaseFileNode
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
 
 
 class MockedFileData:

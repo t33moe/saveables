@@ -4,15 +4,15 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.contracts.data_type import tIterableDataType, tPrimitiveDataType
-    from src.saveable.meta_data import MetaData
-    from src.saveable.saveable import Saveable
+    from saveables.contracts.data_type import tIterableDataType, tPrimitiveDataType
+    from saveables.saveable.meta_data import MetaData
+    from saveables.saveable.saveable import Saveable
 
 
 @dataclass
 class DataField:
     """
-    holds value to be saved along with meta data
+    holds value to be saved along with its meta data
     """
 
     meta: MetaData

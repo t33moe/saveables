@@ -1,4 +1,4 @@
-from src.saveable.utils import get_element_type
+from saveables.saveable.utils import get_element_type
 
 
 def decode_list(lst: list, encoding: str) -> list:

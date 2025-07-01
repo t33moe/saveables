@@ -2,11 +2,11 @@ import h5py  # type: ignore[import-untyped]
 import numpy as np
 import pytest
 
-from src.contracts.constants import attribute
-from src.contracts.data_type import python_type_literal_map
-from src.hdf5_format.h5_filenode import H5FileNode
-from src.saveable.meta_data import MetaData
-from src.saveable.utils import get_element_type
+from saveables.contracts.constants import attribute
+from saveables.contracts.data_type import python_type_literal_map
+from saveables.hdf5_format.h5_filenode import H5FileNode
+from saveables.saveable.meta_data import MetaData
+from saveables.saveable.utils import get_element_type
 
 
 @pytest.mark.parametrize("data", [[1, 2, 3], (1, 2, 3), {1, 2, 3}])

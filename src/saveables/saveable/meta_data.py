@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.contracts.data_type import (
+    from saveables.contracts.data_type import (
         tPrimitivePythonLiteral,
         tPythonTypeLiteral,
         tRole,
@@ -18,7 +18,7 @@ class MetaData:
     """
 
     python_type: tPythonTypeLiteral  # determines original python type of the data
-    role: tRole  # determines data role. Data can either come from an object # noqa: E261, E501
-    # field a key/value of a dictionary # noqa: E116
+    role: tRole  # determines data role. Data can either be the value of an object field
+                 # or a list dictionary keys/values # noqa: E116, E114
     name: str  # name of attribute
     element_type: tPrimitivePythonLiteral  # type of elements if data is list/tuple/set

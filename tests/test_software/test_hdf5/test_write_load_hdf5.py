@@ -14,8 +14,8 @@ from resources.data import (  # type: ignore[import-not-found, import-untyped]
     tuples,
 )
 
-from src.contracts.constants import read_mode, write_mode
-from src.hdf5_format.h5_file import H5File
+from saveables.contracts.constants import read_mode, write_mode
+from saveables.hdf5_format.h5_file import H5File
 
 
 @pytest.mark.parametrize(

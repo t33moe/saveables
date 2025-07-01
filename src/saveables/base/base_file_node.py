@@ -3,23 +3,27 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Generator, Generic, TypeVar
 
-from src.contracts.constants import dict_keys, dict_values
-from src.contracts.data_type import (
+from saveables.contracts.constants import dict_keys, dict_values
+from saveables.contracts.data_type import (
     EmptyIterable,
     python_type_literal_map,
     supported_primitive_data_types,
     tRole,
 )
-from src.python_utils import get_element_type
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
-from src.saveable.saveable import Saveable
-from src.saveable.utils import is_simple_dictionary, is_simple_iterable
+from saveables.python_utils import get_element_type
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
+from saveables.saveable.saveable import Saveable
+from saveables.saveable.utils import is_simple_dictionary, is_simple_iterable
 
 T = TypeVar("T")
 
 
 class BaseFileNode(ABC, Generic[T]):
+    """
+    base class that provides format independet code to read / write
+    data from / file
+    """    
 
     def __init__(self, name: str, parent: BaseFileNode | None, *args, **kwargs):
         self.name = name
@@ -85,9 +89,9 @@ class BaseFileNode(ABC, Generic[T]):
                                     to be written to node
 
         Raises:
-            TypeError: raise TypeError if the data is not None and
+            TypeError: if the data is not None and
                        does not inherit from Saveable
-            ValueError: raise ValueError is data is not None
+            ValueError: if data is None
         """
         # check if value is saveable
         if data_field.value is None:
@@ -112,7 +116,7 @@ class BaseFileNode(ABC, Generic[T]):
                                     node
 
         Raises:
-            TypeError: raises TypeError if data is not a dictionary that has
+            TypeError: if data is not a dictionary that has
                        uniformly typed keys and values
         """
 
@@ -188,7 +192,7 @@ class BaseFileNode(ABC, Generic[T]):
             saveable (Saveable): object the node's data is written into
 
         Raises:
-            AttributeError: raises AttributeError if data in node is
+            AttributeError: if data in node is
                             supposed for a field that the saveable
                             object does not possess
         """
@@ -261,7 +265,7 @@ class BaseFileNode(ABC, Generic[T]):
         elements into node
 
         Args:
-            data_field (DataField): object that holds let / tuple / set and its meta
+            data_field (DataField): object that holds list / tuple / set and its meta
                                     data to be written into node
         """
         pass
@@ -280,7 +284,7 @@ class BaseFileNode(ABC, Generic[T]):
     @abstractmethod
     def read_primitive_data(self, filedata: T) -> DataField:
         """
-        read file data that holds primitive python data like int, str, float etc.
+        read file data that represents primitive python data like int, str, float etc.
         """
         pass
 

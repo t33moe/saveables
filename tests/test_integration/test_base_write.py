@@ -9,10 +9,10 @@ from resources.data import (  # type: ignore[import-not-found, import-untyped]
 )
 from resources.mocks import MockedBaseNode  # type: ignore[import-not-found, import-untyped] # noqa: E501
 
-from src.contracts.constants import dict_keys, dict_values
-from src.contracts.data_type import python_type_literal_map
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
+from saveables.contracts.constants import dict_keys, dict_values
+from saveables.contracts.data_type import python_type_literal_map
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
 
 
 def test_write_simple_dictionary():

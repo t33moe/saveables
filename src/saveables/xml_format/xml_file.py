@@ -1,9 +1,9 @@
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
-from src.base.base_file import BaseFile
-from src.contracts.constants import root, write_mode
-from src.xml_format.xml_filenode import XmlFileNode
+from saveables.base.base_file import BaseFile
+from saveables.contracts.constants import root, write_mode
+from saveables.xml_format.xml_filenode import XmlFileNode
 
 
 class XmlFile(BaseFile):

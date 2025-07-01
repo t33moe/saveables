@@ -4,8 +4,8 @@ import xml.etree.ElementTree as ET
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Generator, Optional
 
-from src.base.base_file_node import BaseFileNode
-from src.contracts.constants import (
+from saveables.base.base_file_node import BaseFileNode
+from saveables.contracts.constants import (
     dict_keys,
     dict_values,
     element_type,
@@ -17,13 +17,13 @@ from src.contracts.constants import (
     role,
     saveable,
 )
-from src.contracts.data_type import python_type_literal_map_reversed
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
-from src.saveable.utils import is_suppported_primitive
+from saveables.contracts.data_type import python_type_literal_map_reversed
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
+from saveables.saveable.utils import is_suppported_primitive
 
 if TYPE_CHECKING:
-    from src.contracts.data_type import tPrimitiveDataType
+    from saveables.contracts.data_type import tPrimitiveDataType
 
 
 class XmlFileNode(BaseFileNode[ET.Element]):
@@ -42,6 +42,13 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             yield elem, python_type_literal_map_reversed[elem.attrib[python_type]]  # type: ignore[index] # noqa: E501
 
     def list_children(self) -> list[BaseFileNode]:
+        """
+        list child nodes of current node
+
+        Returns:
+            list[BaseFileNode]: children of current node
+        """
+
         children: list[BaseFileNode] = []
         # iterate over all elements that have the current
         # node as parent and contain saveables as data
@@ -52,7 +59,18 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         return children
 
     def create_child_node(self, meta: MetaData) -> BaseFileNode:
+        """
+        create child node from given meta data
 
+        Args:
+            meta (MetaData): holds meta data neccessary
+                             to create a node, like name
+                             etc.
+
+        Returns:
+            BaseFileNode: newly created child node
+        """
+        
         # create xml tag meta attributes
         meta_dict = {key: str(val) for key, val in asdict(meta).items()}
         child = ET.SubElement(self._element, meta.name, attrib=meta_dict)
@@ -61,7 +79,13 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         return XmlFileNode(meta.name, self, child)
 
     def write_primitive_data(self, data_field: DataField):
-        """write standard scalar data types to file"""
+        """
+        write scalar supported data to file node
+
+        Args:
+            data_field (DataField): object that holds scalar data and its meta data to
+                                    be written into node
+        """        
 
         # check data type
         if not is_suppported_primitive(data_field.value):
@@ -74,6 +98,14 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         self._write_primitive_data(data_field.value, data_field.meta)  # type: ignore[arg-type] # noqa: E501
 
     def write_simple_iterable(self, data_field: DataField):
+        """
+        write python lists / tuples / set with uniformly typed
+        elements into node
+
+        Args:
+            data_field (DataField): object that holds list / tuple / set and its meta
+                                    data to be written into node
+        """
 
         if len(data_field.value) == 0 and data_field.meta.element_type == empty_type:  # type: ignore[arg-type] # noqa: E501
             self._write_primitive_data(data="", meta=data_field.meta)
@@ -87,6 +119,13 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             self._write_primitive_data(value, data_field.meta)
 
     def write_none(self, data_field: DataField):
+        """
+        special method to write None into file node
+
+        Args:
+            data_field (DataField): object that holds None as a data along with its
+                                    meta data
+        """
 
         none_meta = MetaData(
             python_type=none_type,
@@ -98,7 +137,16 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         self._write_primitive_data(data, none_meta)
 
     def read_primitive_data(self, element: ET.Element) -> DataField:
+        """
+        read file data that represents primitive python data like int, str, float etc.
 
+        Args:
+            element (ET.Element): xml element whose text represents 
+                                  a primitive data type like int, str, float etc.
+
+        Returns:
+            DataField: datafield that holds the read value and its meta data
+        """
         # extract meta data
         role_ = element.attrib[role]
         name_ = element.attrib[name]
@@ -118,7 +166,18 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         return DataField(value=value, meta=meta)
 
     def read_simple_iterable(self, element: ET.Element) -> DataField | None:
+        """
+        read list, set or tuples whose elements have all the same type
 
+        Args:
+            element (ET.Element): xml element element that represents an element
+                                  of a list / tuple / set
+
+        Returns:
+            DataField | None: returns a datafield that holds list / tuple / set
+                              and its meta data if the list / tuple / set has not
+                              been already read
+        """
         # extract meta data
         name_ = element.attrib[name]
         python_type_ = element.attrib[python_type]
@@ -159,7 +218,19 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         return data_field
 
     def read_simple_dictionary(self, element: ET.Element) -> DataField | None:
+        """
+        read dictionaries whose keys have all the same type
+        and whose values have all the same type
 
+
+        Args:
+            element (ET.Element): xml element the belongs to the list of keys / values
+                                  of a dictionary
+
+        Returns:
+            DataField | None: returns a datafield that holds a dictionary along
+                              with its meta data, if keys and values have been read
+        """
         # extract meta data
         name_ = element.attrib[name]
         python_type_ = element.attrib[python_type]

@@ -1,8 +1,8 @@
 import h5py  # type: ignore[import-untyped]
 
-from src.base.base_file import BaseFile
-from src.contracts.constants import read_mode, root, write_mode
-from src.hdf5_format.h5_filenode import H5FileNode
+from saveables.base.base_file import BaseFile
+from saveables.contracts.constants import read_mode, root, write_mode
+from saveables.hdf5_format.h5_filenode import H5FileNode
 
 
 class H5File(BaseFile):

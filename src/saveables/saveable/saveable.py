@@ -3,18 +3,18 @@ from __future__ import annotations
 from dataclasses import dataclass, fields
 from typing import TYPE_CHECKING, Generator
 
-from src.contracts.constants import attribute, none_type, saveable
-from src.contracts.data_type import (
+from saveables.contracts.constants import attribute, none_type, saveable
+from saveables.contracts.data_type import (
     python_type_literal_map,
     python_type_literal_map_reversed,
 )
-from src.python_utils import get_element_type
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
-from src.saveable.utils import is_simple_dictionary, is_simple_iterable
+from saveables.python_utils import get_element_type
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
+from saveables.saveable.utils import is_simple_dictionary, is_simple_iterable
 
 if TYPE_CHECKING:
-    from src.contracts.data_type import tPythonTypeLiteral
+    from saveables.contracts.data_type import tPythonTypeLiteral
 
 
 @dataclass
@@ -29,7 +29,7 @@ class Saveable:
         iterate over attributes that are to be saved
 
         Raises:
-            TypeError: if and object's attribute has a type that is not supported
+            TypeError: if an object's attribute has a type that is not supported
 
         Yields:
             Generator[DataField, None, None]: DataField that holds attribute value
@@ -69,7 +69,7 @@ class Saveable:
                 python_type=python_type,
                 role=role,
                 name=name,
-                element_type=element_type,
+                element_type=element_type,  # type: ignore[arg-type]
             )
             yield DataField(meta=meta, value=value)
 

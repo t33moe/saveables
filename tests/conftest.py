@@ -1,8 +1,11 @@
 import os
 import shutil
+import sys
 from pathlib import Path
 
 import pytest
+
+sys.path.extend(str(Path(__file__).parent / 'src'))
 
 
 @pytest.fixture

@@ -10,17 +10,17 @@ from resources.data import (  # type: ignore[import-not-found, import-untyped]
     data_field_tuple,
 )
 from resources.mocks import (  # type: ignore[import-not-found, import-untyped]
-    MockedBaseNode,  
+    MockedBaseNode,
     MockedFileData,
 )
 
-from src.contracts.constants import empty_type, saveable
-from src.contracts.data_type import (
+from saveables.contracts.constants import empty_type, saveable
+from saveables.contracts.data_type import (
     python_type_literal_map,
     python_type_literal_map_reversed,
 )
-from src.saveable.data_field import DataField
-from src.saveable.saveable import Saveable
+from saveables.saveable.data_field import DataField
+from saveables.saveable.saveable import Saveable
 
 
 @pytest.mark.parametrize(

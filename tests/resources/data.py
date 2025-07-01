@@ -1,14 +1,14 @@
 from dataclasses import dataclass, field, make_dataclass
 from typing import Any, Optional
 
-from src.contracts.constants import attribute, saveable
-from src.contracts.data_type import (
+from saveables.contracts.constants import attribute, saveable
+from saveables.contracts.data_type import (
     python_type_literal_map,
     python_type_literal_map_reversed,
 )
-from src.saveable.data_field import DataField
-from src.saveable.meta_data import MetaData
-from src.saveable.saveable import Saveable
+from saveables.saveable.data_field import DataField
+from saveables.saveable.meta_data import MetaData
+from saveables.saveable.saveable import Saveable
 
 
 # create test data for lists

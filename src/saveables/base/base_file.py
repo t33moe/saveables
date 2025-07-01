@@ -4,11 +4,11 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from src.base.base_file_node import BaseFileNode
-from src.saveable.saveable import Saveable
+from saveables.base.base_file_node import BaseFileNode
+from saveables.saveable.saveable import Saveable
 
 if TYPE_CHECKING:
-    from src.contracts.data_type import tFileMode
+    from saveables.contracts.data_type import tFileMode
 
 
 class BaseFile(ABC):
@@ -72,6 +72,9 @@ class BaseFile(ABC):
 
     @abstractmethod
     def open(self):
+        """
+        prepares file for loading/writing
+        """        
         pass
 
     @abstractmethod
