@@ -1,7 +1,9 @@
+from typing import Any
+
 from saveables.saveable.utils import get_element_type
 
 
-def decode_list(lst: list, encoding: str) -> list:
+def decode_list(lst: list[Any], encoding: str) -> list[Any]:
     """
     if lst is a list of bytes decode these bytes
     and return a list of strings with decoded data

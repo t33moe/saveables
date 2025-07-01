@@ -8,7 +8,7 @@ from saveables.contracts.data_type import (
     python_type_literal_map,
     python_type_literal_map_reversed,
 )
-from saveables.python_utils import get_element_type
+from saveables.python_utils import get_element_type  # type: ignore[attr-defined]
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
 from saveables.saveable.utils import is_simple_dictionary, is_simple_iterable
@@ -35,7 +35,7 @@ class Saveable:
             Generator[DataField, None, None]: DataField that holds attribute value
                                               along with meta data
         """
-        for field in fields(self):  # type: ignore
+        for field in fields(self):
             name = field.name
             role = attribute
             value = getattr(self, name)

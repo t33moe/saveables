@@ -31,7 +31,9 @@ class XmlFileNode(BaseFileNode[ET.Element]):
     XML specific implementations to save and load Saveable objects
     """
 
-    def __init__(self, name: str, parent: Optional[BaseFileNode], element: ET.Element):
+    def __init__(
+        self, name: str, parent: Optional[BaseFileNode[ET.Element]], element: ET.Element
+    ):
         super().__init__(name, parent)
         self._element = element
         self._processed_iterables_and_dictionary_names: list[str] = []
@@ -41,7 +43,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         for elem in self._element:
             yield elem, python_type_literal_map_reversed[elem.attrib[python_type]]  # type: ignore[index] # noqa: E501
 
-    def list_children(self) -> list[BaseFileNode]:
+    def list_children(self) -> list[BaseFileNode[ET.Element]]:
         """
         list child nodes of current node
 
@@ -49,7 +51,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             list[BaseFileNode]: children of current node
         """
 
-        children: list[BaseFileNode] = []
+        children: list[BaseFileNode[ET.Element]] = []
         # iterate over all elements that have the current
         # node as parent and contain saveables as data
         # and create file nodes from these elements
@@ -58,7 +60,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             children.append(XmlFileNode(name_, self, elem))
         return children
 
-    def create_child_node(self, meta: MetaData) -> BaseFileNode:
+    def create_child_node(self, meta: MetaData) -> BaseFileNode[ET.Element]:
         """
         create child node from given meta data
 
@@ -70,7 +72,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         Returns:
             BaseFileNode: newly created child node
         """
-        
+
         # create xml tag meta attributes
         meta_dict = {key: str(val) for key, val in asdict(meta).items()}
         child = ET.SubElement(self._element, meta.name, attrib=meta_dict)
@@ -78,14 +80,14 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         # return filenode
         return XmlFileNode(meta.name, self, child)
 
-    def write_primitive_data(self, data_field: DataField):
+    def write_primitive_data(self, data_field: DataField) -> None:
         """
         write scalar supported data to file node
 
         Args:
             data_field (DataField): object that holds scalar data and its meta data to
                                     be written into node
-        """        
+        """
 
         # check data type
         if not is_suppported_primitive(data_field.value):
@@ -97,7 +99,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         # write data
         self._write_primitive_data(data_field.value, data_field.meta)  # type: ignore[arg-type] # noqa: E501
 
-    def write_simple_iterable(self, data_field: DataField):
+    def write_simple_iterable(self, data_field: DataField) -> None:
         """
         write python lists / tuples / set with uniformly typed
         elements into node
@@ -118,7 +120,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         for value in data_field.value:  # type: ignore[union-attr]
             self._write_primitive_data(value, data_field.meta)
 
-    def write_none(self, data_field: DataField):
+    def write_none(self, data_field: DataField) -> None:
         """
         special method to write None into file node
 
@@ -141,7 +143,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         read file data that represents primitive python data like int, str, float etc.
 
         Args:
-            element (ET.Element): xml element whose text represents 
+            element (ET.Element): xml element whose text represents
                                   a primitive data type like int, str, float etc.
 
         Returns:
@@ -154,10 +156,10 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         element_type_ = element.attrib[element_type]
         meta = MetaData(
             python_type=python_type_,  # type: ignore[arg-type]
-            name=name_,  # type: ignore[arg-type]
+            name=name_,
             element_type=element_type_,  # type: ignore[arg-type]
             role=role_,  # type: ignore[arg-type]
-        )  # type: ignore[arg-type]
+        )
 
         # extract value
         type_ = python_type_literal_map_reversed[element.attrib[python_type]]  # type: ignore[index] # noqa: E501
@@ -185,7 +187,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         element_type_ = element.attrib[element_type]
         meta = MetaData(
             python_type=python_type_,  # type: ignore[arg-type]
-            name=name_,  # type: ignore[arg-type]
+            name=name_,
             role=role_,  # type: ignore[arg-type]
             element_type=element_type_,  # type: ignore[arg-type]
         )
@@ -238,7 +240,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         element_type_ = none_type
         meta = MetaData(
             python_type=python_type_,  # type: ignore[arg-type]
-            name=name_,  # type: ignore[arg-type]
+            name=name_,
             role=role_,  # type: ignore[arg-type]
             element_type=element_type_,  # type: ignore[arg-type]
         )
@@ -257,10 +259,10 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         ]
 
         # iter through elements and extract keys
-        keys: list = []
+        keys: list[str] | list[float] | list[bool] | list[int] = []
         for el in key_elements:
             # read value from element und cast into correct python type
-            value = python_type_literal_map_reversed[el.attrib[element_type]](el.text)  # type: ignore[index, assignment] # noqa: E501
+            value = python_type_literal_map_reversed[el.attrib[element_type]](el.text)  # type: ignore[index] # noqa: E501
             keys.append(value)
 
         # find subelements that hold values of dictionary
@@ -273,10 +275,10 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         ]
 
         # iter through elements and extract dictionary values
-        values: list = []
+        values: list[str] | list[float] | list[bool] | list[int] = []
         for el in value_elements:
             # read value from element and cast into correct python type
-            value = python_type_literal_map_reversed[el.attrib[element_type]](el.text)  # type: ignore[index, assignment] # noqa: E501
+            value = python_type_literal_map_reversed[el.attrib[element_type]](el.text)  # type: ignore[index] # noqa: E501
             values.append(value)
 
         # datafield with dict from found keys / values
@@ -288,7 +290,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
 
         return data_field
 
-    def _write_primitive_data(self, data: tPrimitiveDataType, meta: MetaData):
+    def _write_primitive_data(self, data: tPrimitiveDataType, meta: MetaData) -> None:
         """
         create xml tag and write data into it
 
@@ -297,5 +299,5 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             meta (MetaData): meta data that are written as tag attributes
         """
         attrib = {key: str(val) for key, val in asdict(meta).items()}
-        el = ET.SubElement(self._element, meta.name, attrib=attrib)  # type: ignore[union-attr] # noqa: E501
+        el = ET.SubElement(self._element, meta.name, attrib=attrib)
         el.text = str(data)

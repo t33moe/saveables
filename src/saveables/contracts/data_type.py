@@ -6,8 +6,8 @@ class EmptyIterable:
 
 
 supported_primitive_data_types = (str, int, float, bool)
-tPrimitiveDataType = str | int | None
-tIterableDataType = list | set | tuple | dict
+tPrimitiveDataType = str | int | None | float | bool
+tIterableDataType = list | set | tuple | dict  # type: ignore[type-arg]
 tPrimitivePythonLiteral = Literal["int", "str", "none_type", "float", "bool"]
 tIterablePythonLiteral = Literal["list", "set", "tuple", "dict", "empty_iterable"]
 tPythonTypeLiteral = (

@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 
-from saveables.contracts.constants import attribute, name, python_type, saveable
+from saveables.contracts.constants import (attribute, name, python_type,
+                                           saveable)
 from saveables.contracts.data_type import python_type_literal_map
 from saveables.saveable.meta_data import MetaData
 from saveables.xml_format.xml_filenode import XmlFileNode

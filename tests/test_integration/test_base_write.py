@@ -1,13 +1,9 @@
 import pytest
 from resources.data import (  # type: ignore[import-not-found, import-untyped]
-    data_field_dict,
-    data_field_int,
-    data_field_list,
-    data_field_saveable,
-    data_field_set,
-    data_field_tuple,
-)
-from resources.mocks import MockedBaseNode  # type: ignore[import-not-found, import-untyped] # noqa: E501
+    data_field_dict, data_field_int, data_field_list, data_field_saveable,
+    data_field_set, data_field_tuple)
+from resources.mocks import \
+    MockedBaseNode  # type: ignore[import-not-found, import-untyped] # noqa: E501
 
 from saveables.contracts.constants import dict_keys, dict_values
 from saveables.contracts.data_type import python_type_literal_map

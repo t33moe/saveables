@@ -2,23 +2,14 @@ from dataclasses import replace
 
 import pytest
 from resources.data import (  # type: ignore[import-not-found, import-untyped]
-    create_saveable_from_datafields,
-    data_field_int,
-    data_field_list,
-    data_field_saveable,
-    data_field_set,
-    data_field_tuple,
-)
+    create_saveable_from_datafields, data_field_int, data_field_list,
+    data_field_saveable, data_field_set, data_field_tuple)
 from resources.mocks import (  # type: ignore[import-not-found, import-untyped]
-    MockedBaseNode,
-    MockedFileData,
-)
+    MockedBaseNode, MockedFileData)
 
 from saveables.contracts.constants import empty_type, saveable
-from saveables.contracts.data_type import (
-    python_type_literal_map,
-    python_type_literal_map_reversed,
-)
+from saveables.contracts.data_type import (python_type_literal_map,
+                                           python_type_literal_map_reversed)
 from saveables.saveable.data_field import DataField
 from saveables.saveable.saveable import Saveable
 

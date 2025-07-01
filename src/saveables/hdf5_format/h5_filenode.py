@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import fields
 from typing import Any, Generator
 
-import h5py  # type: ignore[import-untyped]
+import h5py
 import numpy as np
 from h5py import Dataset, Group
 
@@ -36,8 +36,12 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
     def __init__(self, name: str, parent: H5FileNode | None, group: Group):
         super().__init__(name, parent)
         self._group = group
-        self._dict_keys_cache: dict[str, list] = dict()
-        self._dict_values_cache: dict[str, list] = dict()
+        self._dict_keys_cache: dict[
+            str, list[float] | list[str] | list[int] | list[bool]
+        ] = dict()
+        self._dict_values_cache: dict[
+            str, list[float] | list[str] | list[int] | list[bool]
+        ] = dict()
 
     def __iter__(self) -> Generator[tuple[Dataset | Group, type]]:
 
@@ -46,9 +50,9 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             item = self._group[name_]
             if isinstance(item, Dataset):
                 python_type_ = python_type_literal_map_reversed[item.attrs[python_type]]
-                yield item, python_type_  # type: ignore[misc]
+                yield item, python_type_
             else:
-                yield item, Saveable  # type: ignore[misc]
+                yield item, Saveable
 
     def read_python_attributes(self) -> list[DataField]:
         """
@@ -63,7 +67,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         self._dict_values_cache = dict()
         return super().read_python_attributes()
 
-    def create_child_node(self, meta: MetaData) -> BaseFileNode:
+    def create_child_node(self, meta: MetaData) -> BaseFileNode[Dataset | Group]:
         """
         create child node from given meta data
 
@@ -79,7 +83,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         child_group = self._group.create_group(meta.name)
         return H5FileNode(meta.name, self, child_group)
 
-    def write_primitive_data(self, data_field: DataField):
+    def write_primitive_data(self, data_field: DataField) -> None:
         """
         write scalar supported data to file node
 
@@ -103,7 +107,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             meta=data_field.meta,
         )
 
-    def write_simple_iterable(self, data_field: DataField):
+    def write_simple_iterable(self, data_field: DataField) -> None:
         """
         write python lists / tuples / set with uniformly typed
         elements into node
@@ -117,7 +121,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
                        uniformly typed elements
             ValueError: if meta data indicates that the list / tuple / set is empty
                         but it is not
-        """        
+        """
         # check if value type is correct
         if not is_simple_iterable(data_field.value):
             raise TypeError("value must be of type list, set or tuple ")
@@ -128,14 +132,14 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         if (
             len_ == 0
             and data_field.meta.element_type == python_type_literal_map[EmptyIterable]
-        ):  # type: ignore[arg-type]
+        ):
             # we are dealing with an empty list / set / tuple. Set default data type
             # to integer
             data = np.array(data_, dtype=np.int_)
         elif (
             len_
             and data_field.meta.element_type == python_type_literal_map[EmptyIterable]
-        ):  # type: ignore[arg-type]
+        ):
             raise ValueError(
                 f"data for {data_field.meta.name} is declared as empty, but it is not"
             )
@@ -145,12 +149,12 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             dtype = None
             if data_field.meta.element_type == python_type_literal_map[str]:
                 dtype = h5py.string_dtype(encoding=encoding)
-            data = np.array(data_, dtype=dtype)  # type: ignore[arg-type]
+            data = np.array(data_, dtype=dtype)
         self._create_dataset(
             data_field.meta.name, data=data, dtype=data.dtype, meta=data_field.meta
         )
 
-    def write_none(self, data_field: DataField):
+    def write_none(self, data_field: DataField) -> None:
         """
         special method to write None into file node
 
@@ -160,7 +164,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
 
         Raises:
             TypeError: if data to be written is not None
-        """        
+        """
         if data_field.value is not None:
             raise TypeError(
                 f"datafield {data_field.meta.name} is"
@@ -190,8 +194,8 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
                        in a data set
 
         Returns:
-            DataField: object that holds read data and its meta data 
-        """        
+            DataField: object that holds read data and its meta data
+        """
 
         if isinstance(filedata, Group):
             raise TypeError("primitive data is expected to be hold by a dataset")
@@ -250,7 +254,6 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         return DataField(value=value, meta=meta)
 
     def read_simple_dictionary(self, filedata: Dataset | Group) -> DataField | None:
-
         """
         read dictionaries whose keys have all the same type
         and whose values have all the same type
@@ -285,7 +288,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             python_type_ = filedata.attrs[python_type]
             meta = MetaData(
                 python_type=python_type_,
-                role=attribute,  # type: ignore[arg-type]
+                role=attribute,
                 name=name_,
                 element_type=none_type,  # type: ignore[arg-type]
             )
@@ -300,7 +303,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             # cannot restore dictionary yet, since either keys or values are missing
             return None
 
-    def list_children(self) -> list[BaseFileNode]:
+    def list_children(self) -> list[BaseFileNode[Dataset | Group]]:
         """
         list child nodes of current node
 
@@ -309,7 +312,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         """
 
         # create empty child list that is going to be filled
-        children: list[BaseFileNode] = []
+        children: list[BaseFileNode[Dataset | Group]] = []
 
         # create child node for each h5 group that is a direct child
         # of the node's h5 group
@@ -320,7 +323,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
 
         return children
 
-    def _create_dataset(self, name: str, data: Any, dtype: Any, meta: MetaData):
+    def _create_dataset(self, name: str, data: Any, dtype: Any, meta: MetaData) -> None:
         """
         create h5 dataset
 

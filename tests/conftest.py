@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-sys.path.extend(str(Path(__file__).parent / 'src'))
+sys.path.extend(str(Path(__file__).parent / "src"))
 
 
 @pytest.fixture

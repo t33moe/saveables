@@ -10,7 +10,7 @@ from saveables.contracts.data_type import (
     supported_primitive_data_types,
     tRole,
 )
-from saveables.python_utils import get_element_type
+from saveables.python_utils import get_element_type  # type: ignore[attr-defined]
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
 from saveables.saveable.saveable import Saveable
@@ -23,9 +23,9 @@ class BaseFileNode(ABC, Generic[T]):
     """
     base class that provides format independet code to read / write
     data from / file
-    """    
+    """
 
-    def __init__(self, name: str, parent: BaseFileNode | None, *args, **kwargs):
+    def __init__(self, name: str, parent: BaseFileNode | None, *args, **kwargs):  # type: ignore[no-untyped-def, type-arg] # noqa: E501
         self.name = name
         self.parent = parent
 
@@ -54,7 +54,7 @@ class BaseFileNode(ABC, Generic[T]):
                     data_fields.append(data_field)
         return data_fields
 
-    def write_data(self, data_field: DataField):
+    def write_data(self, data_field: DataField) -> None:
         """
         write data to node
 
@@ -79,7 +79,7 @@ class BaseFileNode(ABC, Generic[T]):
         else:
             raise ValueError(f"attribute {data_field.meta.name} cannot be saved")
 
-    def write_saveable(self, data_field: DataField):
+    def write_saveable(self, data_field: DataField) -> None:
         """
         write saveable object along with its meta data to node
 
@@ -106,7 +106,7 @@ class BaseFileNode(ABC, Generic[T]):
         for data_field in data_field.value.iter_fields():
             sub_node.write_data(data_field)
 
-    def write_simple_dictionary(self, data_field: DataField):
+    def write_simple_dictionary(self, data_field: DataField) -> None:
         """
         write keys and values of a dictionary as lists into node
 
@@ -134,7 +134,9 @@ class BaseFileNode(ABC, Generic[T]):
         # save dictionary values as a list
         self.write_dictionary_keys_or_values(data_field, dict_values)
 
-    def write_dictionary_keys_or_values(self, data_field: DataField, role: tRole):
+    def write_dictionary_keys_or_values(
+        self, data_field: DataField, role: tRole
+    ) -> None:
         """
         write keys or values of given dictionary as a list into node
 
@@ -184,7 +186,7 @@ class BaseFileNode(ABC, Generic[T]):
         # write keys / values as list in file
         self.write_simple_iterable(data_field_to_write)
 
-    def load(self, saveable: Saveable):
+    def load(self, saveable: Saveable) -> None:
         """
         load data from node to given saveable
 
@@ -223,7 +225,7 @@ class BaseFileNode(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def list_children(self) -> list[BaseFileNode]:
+    def list_children(self) -> list[BaseFileNode]:  # type: ignore[type-arg]
         """
         list child nodes of current node
 
@@ -233,7 +235,7 @@ class BaseFileNode(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def create_child_node(self, meta: MetaData) -> BaseFileNode:
+    def create_child_node(self, meta: MetaData) -> BaseFileNode:  # type: ignore[type-arg] # noqa: E501
         """
         create child node from given meta data
 
@@ -248,7 +250,7 @@ class BaseFileNode(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def write_primitive_data(self, data_field: DataField):
+    def write_primitive_data(self, data_field: DataField) -> None:
         """
         write scalar supported data to file node
 
@@ -259,7 +261,7 @@ class BaseFileNode(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def write_simple_iterable(self, data_field: DataField):
+    def write_simple_iterable(self, data_field: DataField) -> None:
         """
         write python lists / tuples / set with uniformly typed
         elements into node
@@ -271,7 +273,7 @@ class BaseFileNode(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def write_none(self, data_field: DataField):
+    def write_none(self, data_field: DataField) -> None:
         """
         special method to write None into file node
 

@@ -3,7 +3,7 @@ from typing import Any
 from saveables.contracts.data_type import EmptyIterable, supported_primitive_data_types
 
 
-def is_typed_uniformly(data: list | set | tuple) -> bool:
+def is_typed_uniformly(data: list[Any] | set[Any] | tuple[Any]) -> bool:
     """
     checks if each element in data is of the same type as
     the first one
@@ -22,7 +22,7 @@ def is_typed_uniformly(data: list | set | tuple) -> bool:
         return all([isinstance(el, type(obj_[0])) for el in obj_])
 
 
-def get_element_type(data: list | set | tuple) -> type:
+def get_element_type(data: list[Any] | set[Any] | tuple[Any]) -> type:
     """
     return type of elements in list / set / tuple
 
@@ -32,7 +32,7 @@ def get_element_type(data: list | set | tuple) -> type:
                                    must have the same type
 
     Raises:
-        ValueError: elements in list / tuple / are not of the same type
+        ValueError: if elements in list / tuple / are not of the same type
 
     Returns:
         type: type of elments in list/tuple/set

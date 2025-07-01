@@ -18,12 +18,12 @@ class BaseFile(ABC):
 
     def __init__(self, path: str | Path, mode: tFileMode):
         self.path = path if isinstance(path, Path) else Path(path)
-        self.root: BaseFileNode | None = (
+        self.root: BaseFileNode | None = (  # type: ignore[type-arg]
             None  # root file node. Needs to be set in method _initialize_root
         )
         self.mode = mode
 
-    def save(self, saveable: Saveable):
+    def save(self, saveable: Saveable) -> None:
         """
         save object to file
 
@@ -43,7 +43,7 @@ class BaseFile(ABC):
         for data_field in saveable.iter_fields():
             self.root.write_data(data_field)
 
-    def load(self, saveable: Saveable):
+    def load(self, saveable: Saveable) -> None:
         """
         load data from file into given object
 
@@ -62,21 +62,21 @@ class BaseFile(ABC):
         # load data
         self.root.load(saveable)
 
-    def __enter__(self):
+    def __enter__(self):  # type: ignore[no-untyped-def]
         self.open()
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback):  # type: ignore[no-untyped-def]
         self.close()
         return False
 
     @abstractmethod
-    def open(self):
+    def open(self) -> None:
         """
         prepares file for loading/writing
-        """        
+        """
         pass
 
     @abstractmethod
-    def close(self) -> bool:
+    def close(self) -> None:
         pass

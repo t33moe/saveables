@@ -1,4 +1,4 @@
-import h5py  # type: ignore[import-untyped]
+import h5py
 
 from saveables.base.base_file import BaseFile
 from saveables.contracts.constants import read_mode, root, write_mode
@@ -8,7 +8,7 @@ from saveables.hdf5_format.h5_filenode import H5FileNode
 class H5File(BaseFile):
     """HDF5 specific implementations to save and load Saveable objects"""
 
-    def open(self):
+    def open(self) -> None:
         """
         prepares file for loading/writing
 
@@ -27,5 +27,5 @@ class H5File(BaseFile):
             raise ValueError(f"unknown file mode {self.mode}")
         self.root = H5FileNode(root, None, group)
 
-    def close(self):
+    def close(self) -> None:
         self._file.close()
