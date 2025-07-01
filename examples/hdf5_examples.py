@@ -15,7 +15,7 @@ from saveables.saveable.saveable import Saveable
 
 
 @dataclass
-class Address(Saveable):
+class Address(Saveable):  # type: ignore[misc]
     street: Optional[str] = None
     house_number: Optional[str] = None
     zip_code: Optional[int] = None
@@ -23,7 +23,7 @@ class Address(Saveable):
 
 
 @dataclass
-class Person(Saveable):
+class Person(Saveable):  # type: ignore[misc]
     name: Optional[str] = None
     last_name: Optional[str] = None
     age: Optional[int] = None

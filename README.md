@@ -23,13 +23,14 @@ Example scripts are located in the examples folder
     .
     ├── examples: Example usage for XML and HDF5
     ├── resources: Development resources
-    |   ├── vs_code: vs code configuration files               
+    |   └──  vs_code: vs code configuration files               
     ├── src 
-    │   ├── base: Abstract base classes for file and node structure
-    │   ├── contracts: Constants and type definitions
-    │   ├── hdf5_format: HDF5-specific implementation
-    │   ├── xml_format: XML-specific implementation
-    │   └── saveable: Interfaces and helpers for saveable objects
+    |   └── saveables
+    │       ├── base: Abstract base classes for file and node structure
+    │       ├── contracts: Constants and type definitions
+    │       ├── hdf5_format: HDF5-specific implementation
+    │       ├── xml_format: XML-specific implementation
+    │       └── saveable: Interfaces and helpers for saveable objects
     └── tests
         ├── resources: Test data and mocks
         ├── test_integration: Integration tests for base components
@@ -55,8 +56,6 @@ Before you can run tests, press ctrl+shift+p, select Python: Configure Tests and
   - write tests for File-Objects and Saveable-Objects 
   - write more unit tests for h5/xml FileNode objects - in particular tests that check error cases
   - write unit tests for utils functions
-* Build script
-  - write script that builds a python library from code
 * Code quality
   - create method extract_meta_data in class XmlFileNode
   - add logging
