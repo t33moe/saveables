@@ -38,7 +38,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         self._element = element
         self._processed_iterables_and_dictionary_names: list[str] = []
 
-    def __iter__(self) -> Generator[tuple[ET.Element, type]]:
+    def __iter__(self) -> Generator[tuple[ET.Element, type], None, None]:
 
         for elem in self._element:
             yield elem, python_type_literal_map_reversed[elem.attrib[python_type]]  # type: ignore[index] # noqa: E501

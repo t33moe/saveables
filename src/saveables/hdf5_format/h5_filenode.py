@@ -43,7 +43,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
             str, list[float] | list[str] | list[int] | list[bool]
         ] = dict()
 
-    def __iter__(self) -> Generator[tuple[Dataset | Group, type]]:
+    def __iter__(self) -> Generator[tuple[Dataset | Group, type], None, None]:
 
         # iter through group an extract dataset
         for name_ in self._group:

@@ -10,3 +10,13 @@ __pycache__/
 
 # Ignore all zip files
 *.zip
+
+# Ignore tmp files
+tmp/
+**/tmp
+
+# Ignore dist
+**/dist
+
+# Ignore eggs
+*.egg-info

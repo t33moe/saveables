@@ -1,10 +1,24 @@
+from pathlib import Path
+
 import pytest
-from resources.data import (  # type: ignore[import-not-found, import-untyped]
-    HoldsDicts, HoldsLists, HoldsNestedData, HoldsPrimitives, HoldsSets,
-    HoldsTuples, dicts, lists, nested0, primitives, sets, tuples)
+from resources.data import (
+    HoldsDicts,
+    HoldsLists,
+    HoldsNestedData,
+    HoldsPrimitives,
+    HoldsSets,
+    HoldsTuples,
+    dicts,
+    lists,
+    nested0,
+    primitives,
+    sets,
+    tuples,
+)
 
 from saveables.contracts.constants import read_mode, write_mode
 from saveables.hdf5_format.h5_file import H5File
+from saveables.saveable.saveable import Saveable
 
 
 @pytest.mark.parametrize(
@@ -18,7 +32,7 @@ from saveables.hdf5_format.h5_file import H5File
         (nested0, HoldsNestedData),
     ],
 )
-def test_write_load_hdf5(local_tmp, obj, cls_):
+def test_write_load_hdf5(local_tmp: Path, obj: Saveable, cls_: type) -> None:
     """
     system test to write and read data to and from a given file
 

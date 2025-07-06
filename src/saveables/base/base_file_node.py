@@ -221,7 +221,7 @@ class BaseFileNode(ABC, Generic[T]):
                 child_node.load(obj)
 
     @abstractmethod
-    def __iter__(self) -> Generator[tuple[T, type]]:
+    def __iter__(self) -> Generator[tuple[T, type], None, None]:
         pass
 
     @abstractmethod

@@ -1,9 +1,13 @@
 import pytest
-from resources.data import (  # type: ignore[import-not-found, import-untyped]
-    data_field_dict, data_field_int, data_field_list, data_field_saveable,
-    data_field_set, data_field_tuple)
-from resources.mocks import \
-    MockedBaseNode  # type: ignore[import-not-found, import-untyped] # noqa: E501
+from resources.data import (
+    data_field_dict,
+    data_field_int,
+    data_field_list,
+    data_field_saveable,
+    data_field_set,
+    data_field_tuple,
+)
+from resources.mocks import MockedBaseNode
 
 from saveables.contracts.constants import dict_keys, dict_values
 from saveables.contracts.data_type import python_type_literal_map
@@ -11,7 +15,7 @@ from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
 
 
-def test_write_simple_dictionary():
+def test_write_simple_dictionary() -> None:
     """
     integration test for writing dictionaries
     """
@@ -31,9 +35,9 @@ def test_write_simple_dictionary():
     )
 
     # create Test class that tests arguments of write_simple_iterable
-    class TestSimpleDictionaryNode(MockedBaseNode):
+    class TestSimpleDictionaryNode(MockedBaseNode):  # type: ignore[misc]
 
-        def write_simple_iterable(self, data_field):
+        def write_simple_iterable(self, data_field: DataField) -> None:
             super().write_simple_iterable(data_field)
             if self._calls["write_simple_iterable"] == 1:
                 assert data_field.value == list(data_field_dict.value.keys())
@@ -64,7 +68,7 @@ def test_write_simple_dictionary():
 )
 def test_write_data_native_python_types(
     data_field: DataField, call_key: str, n_calls: int
-):
+) -> None:
     """
     integration test for writing native python types to a file
 
@@ -84,7 +88,7 @@ def test_write_data_native_python_types(
     assert node._calls[call_key] == n_calls
 
 
-def test_write_data_saveable():
+def test_write_data_saveable() -> None:
     """
     integration test for writing saveable to a file
     """

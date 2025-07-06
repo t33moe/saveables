@@ -1,8 +1,11 @@
-import h5py  # type: ignore[import-untyped]
+from pathlib import Path
+from typing import Any
+
+import h5py
 import numpy as np
 import pytest
 
-from saveables.contracts.constants import attribute
+from saveables.contracts.constants import attribute, none_type, saveable
 from saveables.contracts.data_type import python_type_literal_map
 from saveables.hdf5_format.h5_filenode import H5FileNode
 from saveables.saveable.meta_data import MetaData
@@ -10,7 +13,9 @@ from saveables.saveable.utils import get_element_type
 
 
 @pytest.mark.parametrize("data", [[1, 2, 3], (1, 2, 3), {1, 2, 3}])
-def test_create_dataset_simple_iterable(local_tmp, data):
+def test_create_dataset_simple_iterable(
+    local_tmp: Path, data: list[Any] | tuple[Any] | set[Any]
+) -> None:
     """
     test h5 data set creation with meta data
 
@@ -42,12 +47,12 @@ def test_create_dataset_simple_iterable(local_tmp, data):
         node._create_dataset("mydata", data_, dtype=dtype, meta=meta)
         assert "mydata" in h5f
         dset = h5f["mydata"]
-        assert type(data)(dset[:].tolist()) == data
+        assert type(data)(dset[:].tolist()) == data  # type: ignore[misc]
         for field in meta.__dataclass_fields__:
             assert dset.attrs[field] == str(getattr(meta, field))
 
 
-def test_list_children_h5(local_tmp):
+def test_list_children_h5(local_tmp: Path) -> None:
     """
     test that children of a H5FileNode are listed correctly
 
@@ -71,3 +76,33 @@ def test_list_children_h5(local_tmp):
         # only direct children should be returned
         child_names = sorted(child.name for child in children)
         assert child_names == ["group1", "group2"]
+
+
+def test_create_child_node(local_tmp: Path) -> None:
+    """
+    test that child nodes are created correctly
+
+    Args:
+        local_tmp (Path): temporary test directory
+    """
+
+    # create temporary test h5 file
+    tmpfile = local_tmp / "create_child_node.h5"
+
+    with h5py.File(tmpfile, "w") as h5f:
+        root_node = H5FileNode(name="root", parent=None, group=h5f)
+
+        meta = MetaData(
+            name="child1", python_type=saveable, role=attribute, element_type=none_type
+        )
+
+        child_node = root_node.create_child_node(meta)
+
+        # test that there is a child group in the h5
+        assert "child1" in h5f
+        assert isinstance(h5f["child1"], h5py.Group)
+
+        # return value must be a H5FileNode
+        assert isinstance(child_node, H5FileNode)
+        assert child_node.name == "child1"
+        assert child_node.parent is root_node
