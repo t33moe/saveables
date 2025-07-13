@@ -29,7 +29,7 @@ from saveables.python_utils import decode_list
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
 from saveables.saveable.saveable import Saveable
-from saveables.saveable.utils import is_simple_iterable, is_suppported_primitive
+from saveables.saveable.utils import is_simple_iterable, is_supported_primitive
 
 
 class H5FileNode(BaseFileNode[Dataset | Group]):
@@ -93,7 +93,7 @@ class H5FileNode(BaseFileNode[Dataset | Group]):
         """
 
         # check if data type is correct
-        if not is_suppported_primitive(data_field.value):
+        if not is_supported_primitive(data_field.value):
             raise TypeError(f"data type {type(data_field.value)} is not supported")
 
         # write data

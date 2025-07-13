@@ -88,16 +88,16 @@ def is_simple_dictionary(data: Any) -> bool:
 
     # check keys
     keys = list(data.keys())
-    keys_okay = is_typed_uniformly(keys) and is_suppported_primitive(keys[0])
+    keys_okay = is_typed_uniformly(keys) and is_supported_primitive(keys[0])
 
     # check values
     values = list(data.values())
-    values_okay = is_typed_uniformly(values) and is_suppported_primitive(values[0])
+    values_okay = is_typed_uniformly(values) and is_supported_primitive(values[0])
 
     return keys_okay and values_okay
 
 
-def is_suppported_primitive(data: Any) -> bool:
+def is_supported_primitive(data: Any) -> bool:
     """
     check if data is supported primitive data type
 

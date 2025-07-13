@@ -20,7 +20,7 @@ from saveables.contracts.constants import (
 from saveables.contracts.data_type import python_type_literal_map_reversed
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
-from saveables.saveable.utils import is_suppported_primitive
+from saveables.saveable.utils import is_supported_primitive
 
 if TYPE_CHECKING:
     from saveables.contracts.data_type import tPrimitiveDataType
@@ -90,7 +90,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
         """
 
         # check data type
-        if not is_suppported_primitive(data_field.value):
+        if not is_supported_primitive(data_field.value):
             raise TypeError(
                 f"field {data_field.meta.name} contains"
                 f"an supported data type: {type(data_field.value)}"

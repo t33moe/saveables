@@ -10,7 +10,7 @@ from saveables.saveable.utils import (
     get_element_type,
     is_simple_dictionary,
     is_simple_iterable,
-    is_suppported_primitive,
+    is_supported_primitive,
     is_typed_uniformly,
 )
 
@@ -83,4 +83,4 @@ def test_is_suppported_primitive() -> None:
         input_ = type_(input_raw)
 
         # check result
-        assert is_suppported_primitive(input_)
+        assert is_supported_primitive(input_)
