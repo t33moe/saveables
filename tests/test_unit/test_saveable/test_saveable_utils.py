@@ -1,18 +1,16 @@
 from typing import Any
 
 import pytest
-from saveables.contracts.data_type import (
-    EmptyIterable,
-    supported_primitive_data_types,
-    tIterableDataType,
-)
-from saveables.saveable.utils import (
-    get_element_type,
-    is_simple_dictionary,
-    is_simple_iterable,
-    is_supported_primitive,
-    is_typed_uniformly,
-)
+
+from saveables.contracts.constants import element_type, name, python_type, role
+from saveables.contracts.data_type import (EmptyIterable,
+                                           supported_primitive_data_types,
+                                           tIterableDataType)
+from saveables.saveable.utils import (get_element_type, is_simple_dictionary,
+                                      is_simple_iterable,
+                                      is_supported_primitive,
+                                      is_typed_uniformly,
+                                      list_meta_data_attributes)
 
 
 @pytest.mark.parametrize(
@@ -84,3 +82,8 @@ def test_is_suppported_primitive() -> None:
 
         # check result
         assert is_supported_primitive(input_)
+
+
+def test_list_meta_data_attributes() -> None:
+    attr_names = list_meta_data_attributes()
+    assert attr_names == [python_type, role, name, element_type]

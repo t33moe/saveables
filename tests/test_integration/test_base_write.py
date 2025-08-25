@@ -1,12 +1,7 @@
 import pytest
-from resources.data import (
-    data_field_dict,
-    data_field_int,
-    data_field_list,
-    data_field_saveable,
-    data_field_set,
-    data_field_tuple,
-)
+from resources.data import (data_field_dict, data_field_int, data_field_list,
+                            data_field_saveable, data_field_set,
+                            data_field_tuple)
 from resources.mocks import MockedBaseNode
 
 from saveables.contracts.constants import dict_keys, dict_values

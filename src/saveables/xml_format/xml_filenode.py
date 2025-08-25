@@ -5,18 +5,10 @@ from dataclasses import asdict
 from typing import TYPE_CHECKING, Generator, Optional
 
 from saveables.base.base_file_node import BaseFileNode
-from saveables.contracts.constants import (
-    dict_keys,
-    dict_values,
-    element_type,
-    empty_type,
-    name,
-    none_literal,
-    none_type,
-    python_type,
-    role,
-    saveable,
-)
+from saveables.contracts.constants import (dict_keys, dict_values,
+                                           element_type, empty_type, name,
+                                           none_literal, none_type,
+                                           python_type, role, saveable)
 from saveables.contracts.data_type import python_type_literal_map_reversed
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
@@ -60,7 +52,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
             children.append(XmlFileNode(name_, self, elem))
         return children
 
-    def create_child_node(self, meta: MetaData) -> BaseFileNode[ET.Element]:
+    def create_child_node(self, meta: MetaData) -> XmlFileNode:
         """
         create child node from given meta data
 
@@ -70,7 +62,7 @@ class XmlFileNode(BaseFileNode[ET.Element]):
                              etc.
 
         Returns:
-            BaseFileNode: newly created child node
+            XmlFileNode: newly created child node
         """
 
         # create xml tag meta attributes

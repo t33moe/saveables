@@ -19,7 +19,7 @@ class BaseFile(ABC):
     def __init__(self, path: str | Path, mode: tFileMode):
         self.path = path if isinstance(path, Path) else Path(path)
         self.root: BaseFileNode | None = (  # type: ignore[type-arg]
-            None  # root file node. Needs to be set in method _initialize_root
+            None  # root file node. Needs to be initialized in subclasses
         )
         self.mode = mode
 

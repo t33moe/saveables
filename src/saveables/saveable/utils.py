@@ -1,6 +1,8 @@
 from typing import Any
 
-from saveables.contracts.data_type import EmptyIterable, supported_primitive_data_types
+from saveables.contracts.data_type import (EmptyIterable,
+                                           supported_primitive_data_types)
+from saveables.saveable.meta_data import MetaData
 
 
 def is_typed_uniformly(data: list[Any] | set[Any] | tuple[Any]) -> bool:
@@ -108,3 +110,21 @@ def is_supported_primitive(data: Any) -> bool:
         bool: True if data's type is any of the supported primitive data types
     """
     return any([isinstance(data, type_) for type_ in supported_primitive_data_types])
+
+
+def list_meta_data_attributes() -> list[str]:
+    """
+    list attribute names of meta data object
+
+    Returns:
+        list[str]: list of attribute names
+    """
+    return [str(name) for name in MetaData.__dataclass_fields__.keys()]
+
+
+def list_meta_data_attribute_values(meta: MetaData) -> list[str]:
+    values = [getattr(meta, name) for name in list_meta_data_attributes()]
+    if any([not isinstance(val, str) for val in values]):
+        raise ValueError("found attribute in meta object that is not a string")
+    else:
+        return values

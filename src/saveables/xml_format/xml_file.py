@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
 from saveables.base.base_file import BaseFile
-from saveables.contracts.constants import root, write_mode, read_mode
+from saveables.contracts.constants import read_mode, root, write_mode
 from saveables.xml_format.xml_filenode import XmlFileNode
 
 
@@ -15,7 +15,7 @@ class XmlFile(BaseFile):
 
         Raises:
             ValueError: if unexpected file mode occurs
-        """        
+        """
         if self.mode == write_mode:
             # initialize root xml element
             self._root_element = ET.Element(root)

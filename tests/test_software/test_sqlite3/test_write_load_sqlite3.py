@@ -6,8 +6,8 @@ from resources.data import (HoldsDicts, HoldsLists, HoldsNestedData,
                             lists, nested0, primitives, sets, tuples)
 
 from saveables.contracts.constants import read_mode, write_mode
-from saveables.hdf5_format.h5_file import H5File
 from saveables.saveable.saveable import Saveable
+from saveables.sqlite3_format.sqlite3_file import Sqlite3File
 
 
 @pytest.mark.parametrize(
@@ -21,7 +21,7 @@ from saveables.saveable.saveable import Saveable
         (nested0, HoldsNestedData),
     ],
 )
-def test_write_load_hdf5(local_tmp: Path, obj: Saveable, cls_: type) -> None:
+def test_write_load_sqlite(local_tmp: Path, obj: Saveable, cls_: type) -> None:
     """
     system test to write and read data to and from a given file
 
@@ -30,16 +30,15 @@ def test_write_load_hdf5(local_tmp: Path, obj: Saveable, cls_: type) -> None:
         obj (see cls_): data to be written / read
         cls_ (Type): class of data
     """
-
-    # write file to hdf5
-    filename = "test.h5"
-    h5_path = local_tmp / filename
-    with H5File(h5_path, mode=write_mode) as f:
+    filename = "test.sqlite3"
+    sqlite3_path = local_tmp / filename
+    with Sqlite3File(sqlite3_path, mode=write_mode) as f:
         f.save(obj)
 
-    # load data from file
+        # load data from file
     loaded = cls_()
-    with H5File(h5_path, mode=read_mode) as f:
+
+    with Sqlite3File(sqlite3_path, mode=read_mode) as f:
         f.load(loaded)
 
     # check if loaded data matches written data

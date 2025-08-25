@@ -1,3 +1,4 @@
+import uuid
 from typing import Any
 
 from saveables.saveable.utils import get_element_type
@@ -29,3 +30,16 @@ def decode_list(lst: list[Any], encoding: str) -> list[Any]:
         return [el.decode(encoding) for el in lst]
     else:
         return lst
+
+
+def generate_uuid(n_chars: int) -> str:
+    """
+    generate a uuid with specified number of characters
+
+    Args:
+        n_chars (int): _number of characters the uuid is about to have
+
+    Returns:
+        str: uuid string
+    """
+    return str(uuid.uuid4().hex[:n_chars])

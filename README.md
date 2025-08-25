@@ -1,12 +1,12 @@
 
 ## Project Purpose
 
-This code allows you to serialize arbitrary Python objects — 
-such as dictionaries, lists, or custom classes — into structured files and restore 
+This code allows you to serialize custom nested data structures and restore 
 them without loss. It supports the following formats:
 
 - **XML** (human-readable, text-based)
 - **HDF5** (compact and performant, suited for large datasets)
+- **Sqlite3** (table based database format)
 
 ---
 
@@ -16,12 +16,13 @@ Example scripts are located in the examples folder
 
 - `xml_examples.py` – Demonstrates writing and reading XML files
 - `hdf5_examples.py` – Demonstrates writing and reading HDF5 files
+- `sqlite3_examples.py` – Demonstrates writing and reading Sqlite3 files
 
 ---
 
 ## Project Structure
     .
-    ├── examples: Example usage for XML and HDF5
+    ├── examples: Example usage for XML, HDF5 and Sqlite3
     ├── resources: Development resources
     |   └──  vs_code: vs code configuration files               
     ├── src 
@@ -30,12 +31,13 @@ Example scripts are located in the examples folder
     │       ├── contracts: Constants and type definitions
     │       ├── hdf5_format: HDF5-specific implementation
     │       ├── xml_format: XML-specific implementation
-    │       └── saveable: Interfaces and helpers for saveable objects
+    |       ├── sqlite3_format: sqlite3-specific implementation  
+    │       └── saveable: Interfaces and helpers to set up data structures
     └── tests
         ├── resources: Test data and mocks
         ├── test_integration: Integration tests for base components
-        ├── test_unit: Unit tests for XML and HDF5 format 
-        └── test_software: Tests for XML and HDF5 functionality
+        ├── test_unit: Unit tests for XML, HDF5 and Sqlite3 format 
+        └── test_software: Tests for XML, HDF5 and Sqlite3 functionality
 
 ## Development setup for visual studio code
 
@@ -53,14 +55,13 @@ Before you can run tests, press ctrl+shift+p, select Python: Configure Tests and
 ## TODO
 
 * Test coverage
-  - write tests for File-Objects and Saveable-Objects 
-  - write more unit tests for h5/xml FileNode objects - in particular tests that check error cases
-  - write unit tests for utils functions
+  - write more unit tests for h5/xml/sqlite3 FileNode objects - in particular tests that check error cases
 * Code quality
   - create method extract_meta_data in class XmlFileNode
   - add logging
+  - split node interface into a interface for reading and an interface for writing
+  - split file constants.py
 * Features
-  - support sqlite3 file format
   - allow lists/tuples/sets of Saveable objects
 
 

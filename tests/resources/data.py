@@ -2,10 +2,8 @@ from dataclasses import dataclass, field, make_dataclass
 from typing import Any, Optional
 
 from saveables.contracts.constants import attribute, saveable
-from saveables.contracts.data_type import (
-    python_type_literal_map,
-    python_type_literal_map_reversed,
-)
+from saveables.contracts.data_type import (python_type_literal_map,
+                                           python_type_literal_map_reversed)
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
 from saveables.saveable.saveable import Saveable
@@ -130,6 +128,22 @@ meta_int = MetaData(
     element_type=python_type_literal_map[int],
 )
 data_field_int = DataField(value=0, meta=meta_int)
+
+meta_float = MetaData(
+    name="my_float",
+    python_type=python_type_literal_map[float],
+    role=attribute,
+    element_type=python_type_literal_map[float],
+)
+datafield_float = DataField(value=42.2, meta=meta_float)
+
+meta_bool = MetaData(
+    name="my_bool",
+    python_type=python_type_literal_map[bool],
+    role=attribute,
+    element_type=python_type_literal_map[bool],
+)
+datafield_bool = DataField(value=False, meta=meta_bool)
 
 meta_integer_list = MetaData(
     name="my_list",

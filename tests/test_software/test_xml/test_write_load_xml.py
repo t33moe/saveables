@@ -1,20 +1,9 @@
 from pathlib import Path
 
 import pytest
-from resources.data import (
-    HoldsDicts,
-    HoldsLists,
-    HoldsNestedData,
-    HoldsPrimitives,
-    HoldsSets,
-    HoldsTuples,
-    dicts,
-    lists,
-    nested0,
-    primitives,
-    sets,
-    tuples,
-)
+from resources.data import (HoldsDicts, HoldsLists, HoldsNestedData,
+                            HoldsPrimitives, HoldsSets, HoldsTuples, dicts,
+                            lists, nested0, primitives, sets, tuples)
 
 from saveables.contracts.constants import read_mode, write_mode
 from saveables.saveable.saveable import Saveable
