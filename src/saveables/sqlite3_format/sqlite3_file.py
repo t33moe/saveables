@@ -2,16 +2,22 @@ import sqlite3
 from pathlib import Path
 
 from saveables.base.base_file import BaseFile
-from saveables.contracts.constants import (column_name_id,
-                                           column_name_object_id,
-                                           meta_data_table_name,
-                                           n_object_id_chars, read_mode, root,
-                                           write_mode)
+from saveables.contracts.constants import (
+    column_name_id,
+    column_name_object_id,
+    meta_data_table_name,
+    n_object_id_chars,
+    read_mode,
+    root,
+    write_mode,
+)
 from saveables.contracts.data_type import tFileMode
 from saveables.python_utils import generate_uuid
-from saveables.sqlite3_format.sqlite3_commands import (create_meta_data_table,
-                                                       get_first_row_of_table,
-                                                       table_exists)
+from saveables.sqlite3_format.sqlite3_commands import (
+    create_meta_data_table,
+    get_first_row_of_table,
+    table_exists,
+)
 from saveables.sqlite3_format.sqlite3_filenode import Sqlite3FileNode
 
 

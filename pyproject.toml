@@ -1,10 +1,10 @@
 [project]
 name = "saveables"
-version = "0.1.0"
+version = "0.2.0"
 description = "serialize arbitrary Python objects into structured files"
 readme = "README.md"
 authors = [{ name = "Timo Wächtler", email = "timo.waechtler@web.de" }]
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 requires-python = ">=3.8"
 dependencies = [
     "h5py",

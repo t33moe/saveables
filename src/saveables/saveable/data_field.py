@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from saveables.contracts.data_type import (tIterableDataType,
-                                               tPrimitiveDataType)
+    from saveables.contracts.data_type import tIterableDataType, tPrimitiveDataType
     from saveables.saveable.meta_data import MetaData
     from saveables.saveable.saveable import Saveable
 

@@ -4,10 +4,12 @@ from abc import ABC, abstractmethod
 from typing import Generator, Generic, TypeVar
 
 from saveables.contracts.constants import dict_keys, dict_values
-from saveables.contracts.data_type import (EmptyIterable,
-                                           python_type_literal_map,
-                                           supported_primitive_data_types,
-                                           tRole)
+from saveables.contracts.data_type import (
+    EmptyIterable,
+    python_type_literal_map,
+    supported_primitive_data_types,
+    tRole,
+)
 from saveables.python_utils import get_element_type  # type: ignore[attr-defined]
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData

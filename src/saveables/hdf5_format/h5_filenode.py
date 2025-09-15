@@ -8,13 +8,23 @@ import numpy as np
 from h5py import Dataset, Group
 
 from saveables.base.base_file_node import BaseFileNode
-from saveables.contracts.constants import (attribute, dict_keys, dict_values,
-                                           element_type, encoding, name,
-                                           none_literal, none_type,
-                                           python_type, role)
-from saveables.contracts.data_type import (EmptyIterable,
-                                           python_type_literal_map,
-                                           python_type_literal_map_reversed)
+from saveables.contracts.constants import (
+    attribute,
+    dict_keys,
+    dict_values,
+    element_type,
+    encoding,
+    name,
+    none_literal,
+    none_type,
+    python_type,
+    role,
+)
+from saveables.contracts.data_type import (
+    EmptyIterable,
+    python_type_literal_map,
+    python_type_literal_map_reversed,
+)
 from saveables.python_utils import decode_list
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData

@@ -5,10 +5,18 @@ from dataclasses import asdict
 from typing import TYPE_CHECKING, Generator, Optional
 
 from saveables.base.base_file_node import BaseFileNode
-from saveables.contracts.constants import (dict_keys, dict_values,
-                                           element_type, empty_type, name,
-                                           none_literal, none_type,
-                                           python_type, role, saveable)
+from saveables.contracts.constants import (
+    dict_keys,
+    dict_values,
+    element_type,
+    empty_type,
+    name,
+    none_literal,
+    none_type,
+    python_type,
+    role,
+    saveable,
+)
 from saveables.contracts.data_type import python_type_literal_map_reversed
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
