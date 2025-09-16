@@ -1,15 +1,11 @@
 from dataclasses import dataclass
 
-from saveables.contracts.constants import (
-    column_name_data,
-    column_name_id,
-    column_name_meta_data,
-    column_name_object_id,
-    column_name_reference,
-    column_name_reference_id,
-    column_names,
-    meta_data_table_name,
-)
+from saveables.contracts.constants import (column_name_data, column_name_id,
+                                           column_name_meta_data,
+                                           column_name_object_id,
+                                           column_name_reference,
+                                           column_name_reference_id,
+                                           column_names, meta_data_table_name)
 from saveables.saveable.utils import list_meta_data_attributes
 
 

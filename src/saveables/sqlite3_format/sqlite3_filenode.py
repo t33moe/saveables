@@ -4,48 +4,31 @@ from logging import getLogger
 from typing import TYPE_CHECKING, Generator
 
 from saveables.base.base_file_node import BaseFileNode
-from saveables.contracts.constants import (
-    attribute,
-    column_name_data,
-    column_name_id,
-    column_name_meta_data,
-    column_name_object_id,
-    column_name_reference,
-    column_name_reference_id,
-    dict_keys,
-    dict_values,
-    meta_data_table_name,
-    n_object_id_chars,
-    none_literal,
-    python_type,
-)
-from saveables.contracts.data_type import (
-    EmptyIterable,
-    python_type_literal_map,
-    python_type_literal_map_reversed,
-)
+from saveables.contracts.constants import (attribute, column_name_data,
+                                           column_name_id,
+                                           column_name_meta_data,
+                                           column_name_object_id,
+                                           column_name_reference,
+                                           column_name_reference_id, dict_keys,
+                                           dict_values, meta_data_table_name,
+                                           n_object_id_chars, none_literal,
+                                           python_type)
+from saveables.contracts.data_type import (EmptyIterable,
+                                           python_type_literal_map,
+                                           python_type_literal_map_reversed)
 from saveables.python_utils import generate_uuid
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData
-from saveables.saveable.utils import (
-    is_simple_iterable,
-    is_supported_primitive,
-    list_meta_data_attribute_values,
-    list_meta_data_attributes,
-)
+from saveables.saveable.utils import (is_simple_iterable,
+                                      is_supported_primitive,
+                                      list_meta_data_attribute_values,
+                                      list_meta_data_attributes)
 from saveables.sqlite3_format.sqlite3_commands import (
-    SqlCommand,
-    create_saveables_object_table,
-    insert_meta_data,
-    insert_primitive_data,
-    insert_saveable_data,
-    select_meta_data,
-    select_python_attributes_from_table,
-    select_row_id,
-    select_saveable_attributes_from_table,
-    select_simple_iterable_elements,
-    table_exists,
-)
+    SqlCommand, create_saveables_object_table, insert_meta_data,
+    insert_primitive_data, insert_saveable_data, select_meta_data,
+    select_python_attributes_from_table, select_row_id,
+    select_saveable_attributes_from_table, select_simple_iterable_elements,
+    table_exists)
 from saveables.sqlite3_format.sqlite3filedata import SqlLite3FileData
 
 if TYPE_CHECKING:

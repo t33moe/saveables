@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from saveables.contracts.data_type import tFileMode, tPythonTypeLiteral, tRole
+    from saveables.contracts.data_type import (tFileMode, tPythonTypeLiteral,
+                                               tRole)
 
 # reused constants
 python_type = "python_type"

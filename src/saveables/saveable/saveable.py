@@ -4,10 +4,8 @@ from dataclasses import dataclass, fields
 from typing import TYPE_CHECKING, Generator
 
 from saveables.contracts.constants import attribute, none_type, saveable
-from saveables.contracts.data_type import (
-    python_type_literal_map,
-    python_type_literal_map_reversed,
-)
+from saveables.contracts.data_type import (python_type_literal_map,
+                                           python_type_literal_map_reversed)
 from saveables.python_utils import get_element_type  # type: ignore[attr-defined]
 from saveables.saveable.data_field import DataField
 from saveables.saveable.meta_data import MetaData

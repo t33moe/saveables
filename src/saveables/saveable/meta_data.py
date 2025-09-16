@@ -7,11 +7,8 @@ from saveables.contracts.constants import attribute
 from saveables.contracts.data_type import python_type_literal_map
 
 if TYPE_CHECKING:
-    from saveables.contracts.data_type import (
-        tPrimitivePythonLiteral,
-        tPythonTypeLiteral,
-        tRole,
-    )
+    from saveables.contracts.data_type import (tPrimitivePythonLiteral,
+                                               tPythonTypeLiteral, tRole)
 
 
 @dataclass

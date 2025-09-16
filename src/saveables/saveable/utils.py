@@ -1,6 +1,7 @@
 from typing import Any
 
-from saveables.contracts.data_type import EmptyIterable, supported_primitive_data_types
+from saveables.contracts.data_type import (EmptyIterable,
+                                           supported_primitive_data_types)
 from saveables.saveable.meta_data import MetaData
 
 
